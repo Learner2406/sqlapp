@@ -14,8 +14,10 @@ namespace sqlapp.Services
         }
         private SqlConnection GetConnection()
         {
+            string connectionString = "Server=tcp:appserver2406.database.windows.net,1433;Initial Catalog=appdb;Persist Security Info=False;User ID=sqladmin;Password=pranali@123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            return new SqlConnection(connectionString);
 
-            return new SqlConnection(_configuration["SQLConnection"]);
+            //return new SqlConnection(_configuration["SQLConnection"]);
         }
         public List<Product> GetProducts()
         {
