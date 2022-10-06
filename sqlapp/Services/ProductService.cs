@@ -1,5 +1,6 @@
-﻿using sqlapp.Models;
-using System.Data.SqlClient;
+﻿using MySql.Data.MySqlClient;
+using sqlapp.Models;
+
 
 namespace sqlapp.Services
 {
@@ -12,10 +13,10 @@ namespace sqlapp.Services
         {
             _configuration = configuration;
         }
-        private SqlConnection GetConnection()
+        private MySqlConnection GetConnection()
         {
-            string connectionString = "Server=tcp:appserver2406.database.windows.net,1433;Initial Catalog=appdb;Persist Security Info=False;User ID=sqladmin;Password=pranali@123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-            return new SqlConnection(connectionString);
+            string connectionString = "Server=mysqlserver24066.mysql.database.azure.com; Port=3306; Database=appdb; Uid=sqlserver@mysqlserver24066; Pwd=pranali@123; SslMode=Preferred;";
+            return new MySqlConnection(connectionString);
 
             //return new SqlConnection(_configuration["SQLConnection"]);
         }
@@ -23,13 +24,14 @@ namespace sqlapp.Services
         {
             List<Product> _product_lst = new List<Product>();
             string _statement = "SELECT ProductID,ProductName,Quantity from Products";
-            SqlConnection _connection = GetConnection();
+            MySqlConnection _connection = GetConnection();
 
             _connection.Open();
 
-            SqlCommand _sqlcommand = new SqlCommand(_statement, _connection);
+            MySqlCommand _sqlcommand  = new MySqlCommand(_statement, _connection);
+           
 
-            using (SqlDataReader _reader = _sqlcommand.ExecuteReader())
+            using (MySqlDataReader _reader = _sqlcommand.ExecuteReader())
             {
                 while (_reader.Read())
                 {
